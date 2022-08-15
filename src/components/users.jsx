@@ -1,5 +1,8 @@
 import React, { useState } from "react";
 import api from "../api";
+import SearchStatus from "./searchStatus";
+import Qualitie from "./qualitie";
+import BookMark from "./bookmark";
 
 const Usrs = () => {
   //console.log(api.users.fetchAll());
@@ -18,9 +21,8 @@ const Usrs = () => {
 
   return (
     <>
-      <span className={"badge bg-" + (users.length > 0 ? "primary" : "danger")}>
-        {handleCount(users)}
-      </span>
+      <SearchStatus length={users.length} />
+
       <table class="table">
         <thead>
           <tr>
@@ -29,6 +31,7 @@ const Usrs = () => {
             <th scope="col">Профессия</th>
             <th scope="col">Встреч</th>
             <th scope="col">Оценка</th>
+            <th scope="col">Boomark</th>
             <th scope="col"></th>
           </tr>
         </thead>
@@ -37,15 +40,14 @@ const Usrs = () => {
             <tr>
               <td>{user.name}</td>
               <td>
-                {user.qualities.map((item) => (
-                  <span className={"badge m-1 bg-" + item.color} key={item._id}>
-                    {item.name}
-                  </span>
-                ))}
+                <Qualitie user={user} />
               </td>
               <td>{user.profession.name}</td>
               <td>{user.completedMeetings}</td>
               <td>{user.rate}</td>
+              <td>
+                <BookMark />
+              </td>
               <td>
                 <button
                   onClick={() => handleDelete(user._id)}
